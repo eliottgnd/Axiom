@@ -8,6 +8,26 @@ gsap.registerPlugin(ScrollTrigger);
 
 const S = { fontFamily: "var(--font-body)" } as React.CSSProperties;
 
+const glass: React.CSSProperties = {
+  background: "rgba(255,255,255,0.7)",
+  backdropFilter: "blur(32px) saturate(220%)",
+  WebkitBackdropFilter: "blur(32px) saturate(220%)",
+  border: "2px solid rgba(255,255,255,1)",
+  boxShadow: [
+    "0 0 0 1.5px rgba(26,86,255,0.12)",
+    "0 0 0 6px rgba(255,255,255,0.65)",
+    "0 0 0 7.5px rgba(26,86,255,0.08)",
+    "0 12px 40px rgba(26,86,255,0.1)",
+    "inset 0 1.5px 0 rgba(255,255,255,1)",
+    "inset 0 -1px 0 rgba(0,0,0,0.04)",
+    "inset 1.5px 0 0 rgba(255,255,255,0.8)",
+    "inset -1.5px 0 0 rgba(255,255,255,0.8)",
+  ].join(", "),
+  borderRadius: "22px",
+  overflow: "hidden",
+  position: "relative",
+};
+
 function Counter({ value, suffix, decimals, triggered }: {
   value: number; suffix: string; decimals: number; triggered: boolean;
 }) {
@@ -92,12 +112,14 @@ export default function Features() {
   };
 
   const hov = (e: React.MouseEvent<HTMLDivElement>) => {
-    e.currentTarget.style.transform = "translateY(-4px)";
-    e.currentTarget.style.boxShadow = "0 24px 60px rgba(26,86,255,0.1), inset 0 1px 0 rgba(255,255,255,0.9)";
+    e.currentTarget.style.transform = "translateY(-5px) scale(1.005)";
+    e.currentTarget.style.borderColor = "rgba(255,255,255,1)";
+    e.currentTarget.style.boxShadow = "0 24px 64px rgba(26,86,255,0.14), inset 0 2px 0 rgba(255,255,255,1), inset 0 -2px 0 rgba(0,0,0,0.05), inset 2px 0 0 rgba(255,255,255,0.85), inset -2px 0 0 rgba(255,255,255,0.85)";
   };
   const unho = (e: React.MouseEvent<HTMLDivElement>) => {
-    e.currentTarget.style.transform = "translateY(0)";
-    e.currentTarget.style.boxShadow = "0 2px 24px rgba(26,86,255,0.06), inset 0 1px 0 rgba(255,255,255,0.9)";
+    e.currentTarget.style.transform = "translateY(0) scale(1)";
+    e.currentTarget.style.borderColor = "rgba(255,255,255,0.88)";
+    e.currentTarget.style.boxShadow = "0 4px 32px rgba(26,86,255,0.07), inset 0 2px 0 rgba(255,255,255,1), inset 0 -2px 0 rgba(0,0,0,0.04), inset 2px 0 0 rgba(255,255,255,0.7), inset -2px 0 0 rgba(255,255,255,0.7)";
   };
 
   return (
@@ -110,15 +132,25 @@ export default function Features() {
           <h2 ref={titleRef} style={{ ...S, fontSize: "clamp(2rem, 4.5vw, 3.25rem)", fontWeight: 800, letterSpacing: "-0.04em", lineHeight: 1.1, color: "#0a0a0f", clipPath: "inset(100% 0% 0% 0%)" }}>Everything. One place.</h2>
         </div>
 
-        <div ref={gridRef} style={{ display: "grid", gridTemplateColumns: "repeat(12, 1fr)", gap: "1rem" }}>
+        <div ref={gridRef} style={{ display: "grid", gridTemplateColumns: "repeat(12, 1fr)", gap: "1rem", padding: "2px" }}>
 
           {/* CARD 1 — Full gradient hero (col 1-4, row 1-2) */}
           <div className="bento-card" style={{
             gridColumn: "1 / 5", gridRow: "1 / 3",
-            borderRadius: "20px", overflow: "hidden", position: "relative", opacity: 0,
+            borderRadius: "22px", overflow: "hidden", position: "relative", opacity: 0,
             cursor: "default", minHeight: "340px",
             background: "linear-gradient(145deg, #1a56ff 0%, #3b82f6 45%, #60a5fa 75%, #93c5fd 100%)",
-            boxShadow: "0 8px 40px rgba(26,86,255,0.3)",
+            border: "2px solid rgba(147,197,253,0.7)",
+            boxShadow: [
+              "0 0 0 1.5px rgba(59,130,246,0.5)",
+              "0 0 0 6px rgba(96,165,250,0.25)",
+              "0 0 0 7.5px rgba(59,130,246,0.12)",
+              "0 12px 48px rgba(26,86,255,0.45)",
+              "inset 0 1.5px 0 rgba(255,255,255,0.45)",
+              "inset 0 -1px 0 rgba(0,0,0,0.1)",
+              "inset 1.5px 0 0 rgba(255,255,255,0.25)",
+              "inset -1.5px 0 0 rgba(255,255,255,0.15)",
+            ].join(", "),
             transition: "transform 0.35s ease, box-shadow 0.35s ease",
           }}
             onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-4px)"; e.currentTarget.style.boxShadow = "0 20px 60px rgba(26,86,255,0.42)"; }}
@@ -186,10 +218,10 @@ export default function Features() {
           </div>
 
           {/* CARD 6 — Teams */}
-          <div className="bento-card" style={{ ...glass, gridColumn: "11 / 13", padding: "2rem", textAlign: "center" }} onMouseEnter={hov} onMouseLeave={unho}>
-            <p style={{ ...S, fontSize: "0.65rem", fontWeight: 600, color: "#94a3b8", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: "0.6rem" }}>Teams</p>
-            <div style={{ ...S, fontSize: "2.5rem", fontWeight: 900, letterSpacing: "-0.05em", lineHeight: 1, color: "#0a0a0f" }}><Counter value={2400} suffix="+" decimals={0} triggered={triggered} /></div>
-            <p style={{ ...S, fontSize: "0.75rem", color: "#94a3b8", marginTop: "0.45rem" }}>Worldwide</p>
+          <div className="bento-card" style={{ ...glass, gridColumn: "11 / 13", padding: "1.5rem", textAlign: "center", overflow: "hidden" }} onMouseEnter={hov} onMouseLeave={unho}>
+            <p style={{ ...S, fontSize: "0.62rem", fontWeight: 600, color: "#94a3b8", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: "0.6rem" }}>Teams</p>
+            <div style={{ ...S, fontSize: "2rem", fontWeight: 900, letterSpacing: "-0.04em", lineHeight: 1, color: "#0a0a0f", whiteSpace: "nowrap" }}><Counter value={2400} suffix="+" decimals={0} triggered={triggered} /></div>
+            <p style={{ ...S, fontSize: "0.72rem", color: "#94a3b8", marginTop: "0.45rem" }}>Worldwide</p>
           </div>
 
           {/* CARD 7 — Dashboards */}
